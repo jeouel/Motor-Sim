@@ -11,6 +11,7 @@ add_executable(engine_sim
         src/main.cpp
         src/renderer.cpp
         src/shader.cpp
+        src/mesh.cpp
 )
 
 target_link_libraries(engine_sim
@@ -19,6 +20,5 @@ target_link_libraries(engine_sim
         GL
 )
 
-# Copy shaders to build directory
 file(COPY ${CMAKE_SOURCE_DIR}/src/shaders
-     DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+        DESTINATION ${CMAKE_CURRENT_BINARY_DIR})

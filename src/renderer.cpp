@@ -1,7 +1,7 @@
 #include "renderer.h"
 #include <iostream>
 
-Renderer::Renderer() : window(nullptr), shader(nullptr), VAO(0), VBO(0) {}
+Renderer::Renderer() : window(nullptr), shader(nullptr) {}
 
 Renderer::~Renderer() {
         cleanup();
@@ -40,9 +40,6 @@ bool Renderer::initialize(int width, int height) {
         // Load shaders
         shader = new Shader("shaders/vertex.glsl", "shaders/fragment.glsl");
     
-        // Setup plane geometry
-        setupPlane();
-    
         // Setup matrices
         view = glm::lookAt(glm::vec3(0.0f, 5.0f, 10.0f),
                 glm::vec3(0.0f, 0.0f, 0.0f),
@@ -53,32 +50,8 @@ bool Renderer::initialize(int width, int height) {
         return true;
 }
 
-void Renderer::setupPlane() {
-        // Plane vertices (10x10 units, centered at origin)
-        float vertices[] = {
-                // positions
-                -5.0f,  0.0f, -5.0f,
-                5.0f,  0.0f, -5.0f,
-                5.0f,  0.0f,  5.0f,
-        
-                -5.0f,  0.0f, -5.0f,
-                 5.0f,  0.0f,  5.0f,
-                -5.0f,  0.0f,  5.0f
-        };
-    
-        glGenVertexArrays(1, &VAO);
-        glGenBuffers(1, &VBO);
-    
-        glBindVertexArray(VAO);
-    
-        glBindBuffer(GL_ARRAY_BUFFER, VBO);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-    
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-        glEnableVertexAttribArray(0);
-    
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
-        glBindVertexArray(0);
+void Renderer::addMesh(std::unique_ptr<Mesh> mesh) {
+        meshes.push_back(std::move(mesh));
 }
 
 void Renderer::render() {
@@ -86,15 +59,14 @@ void Renderer::render() {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
         shader->use();
-    
-        glm::mat4 model = glm::mat4(1.0f);
-        shader->setMat4("model", model);
         shader->setMat4("view", view);
-        shader->setMat4("projection", projection);
-    
-        glBindVertexArray(VAO);
-        glDrawArrays(GL_TRIANGLES, 0, 6);
-        glBindVertexArray(0);
+        shader->setMat4("projection", projection );
+
+        for (const auto& mesh : meshes) {
+                glm::mat4 model = glm::mat4(1.0f);
+                shader->setMat4("model", model);
+                mesh->render();
+        }
 }
 
 bool Renderer::shouldClose() {
@@ -110,8 +82,7 @@ void Renderer::pollEvents() {
 }
 
 void Renderer::cleanup() {
-        if (VAO) glDeleteVertexArrays(1, &VAO);
-        if (VBO) glDeleteBuffers(1, &VBO);
+        meshes.clear();
         delete shader;
     
         if (window) {

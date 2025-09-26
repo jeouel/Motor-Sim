@@ -8,7 +8,26 @@ int main() {
                 std::cerr << "Failed to initialize renderer" << std::endl;
                 return -1;
         }
-    
+        
+        std::vector<float> planeVertices = {
+                -5.0f, 0.0f, -5.0f,
+                5.0f, 0.0f, -5.0f,
+                5.0f, 0.0f, 5.0f,
+
+                -5.0f, 0.0f, -5.0f,
+                5.0f, 0.0f, 5.0f,
+                -5.0f, 0.0f, 5.0f
+        };
+
+        std::vector<float> triangleVertices = {
+                0.0f, 2.0f, 0.0f,
+                -1.0f, 1.0f, 0.0f,
+                1.0f, 1.0f, 0.0f
+        };
+
+        renderer.addMesh(std::make_unique<Mesh>(planeVertices));
+        renderer.addMesh(std::make_unique<Mesh>(triangleVertices));
+
         // Main render loop
         while (!renderer.shouldClose()) {
                 renderer.pollEvents();

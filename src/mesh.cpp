@@ -1,7 +1,7 @@
 #include "mesh.h"
 #include <iostream>
 
-Mesh::Mesh(const std::vector<float>& verts) : vertices(verts) {
+Mesh::Mesh(const std::vector<float>& verts, std::shared_ptr<Material> mat) : vertices(verts), materialPtr(mat) {
         vertexCount = verts.size() / 3;
         setupMesh();
 }
@@ -9,6 +9,7 @@ Mesh::Mesh(const std::vector<float>& verts) : vertices(verts) {
 Mesh::~Mesh() {
         glDeleteVertexArrays(1, &VAO);
         glDeleteBuffers(1, &VBO);
+
 }
 
 void Mesh::setupMesh() {
@@ -34,4 +35,8 @@ void Mesh::render() {
         glBindVertexArray(VAO);
         glDrawArrays(GL_TRIANGLES, 0, vertexCount);
         glBindVertexArray(0);
+}
+
+Material* Mesh::getMaterialPtr() {
+        return materialPtr->getPtr();
 }

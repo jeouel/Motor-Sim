@@ -12,6 +12,8 @@ add_executable(engine_sim
         src/renderer.cpp
         src/shader.cpp
         src/mesh.cpp
+        src/material.cpp
+        src/color.cpp
 )
 
 target_link_libraries(engine_sim

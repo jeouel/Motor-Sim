@@ -1,4 +1,6 @@
 #include "renderer.h"
+#include "material.h"
+#include "color.h"
 #include <iostream>
 
 int main() {
@@ -25,8 +27,12 @@ int main() {
                 1.0f, 1.0f, 0.0f
         };
 
-        renderer.addMesh(std::make_unique<Mesh>(planeVertices));
-        renderer.addMesh(std::make_unique<Mesh>(triangleVertices));
+        Color blue = Color::Blue();
+        Color red = Color::Red();
+        auto material1 = std::make_shared<Material>( blue, 0.0f, "materiel1");
+        auto material2 = std::make_shared<Material>( red, 0.0f, "materiel2");
+        renderer.addMesh(std::make_unique<Mesh>(planeVertices, material1));
+        renderer.addMesh(std::make_unique<Mesh>(triangleVertices, material2));
 
         // Main render loop
         while (!renderer.shouldClose()) {

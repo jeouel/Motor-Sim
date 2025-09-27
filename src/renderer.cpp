@@ -59,7 +59,6 @@ void Renderer::render() {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
         shader->use();
-        shader->setVec4("setColor", glm::vec4(0.4, 0.6, 0.2, 1.0));
         shader->setMat4("view", view);
         shader->setMat4("projection", projection );
 

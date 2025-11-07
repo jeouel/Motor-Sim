@@ -65,6 +65,7 @@ void Renderer::render() {
         for (const auto& mesh : meshes) {
                 glm::mat4 model = glm::mat4(1.0f);
                 shader->setMat4("model", model);
+                mesh->getMaterialPtr()->applyShaders(shader);
                 mesh->render();
         }
 }

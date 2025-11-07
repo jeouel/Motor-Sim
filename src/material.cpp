@@ -1,5 +1,4 @@
 #include "material.h"
-#include <iostream>
 
 Material::Material(const Color& newColor, float newShininess, std::string newTextureInfo) : color(newColor) {
         shininess = newShininess;

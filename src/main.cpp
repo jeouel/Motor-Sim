@@ -1,6 +1,7 @@
-#include "color.h"
-#include "material.h"
-#include "renderer.h"
+#include "graphics/color.h"
+#include "graphics/material.h"
+#include "graphics/mesh.h"
+#include "core/renderer.h"
 #include <iostream>
 
 int main() {

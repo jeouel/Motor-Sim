@@ -1,0 +1,22 @@
+#pragma once
+#include <GL/glew.h>
+#include <vector>
+#include <memory>
+#include "material.h"
+
+class Mesh {
+        public:
+                Mesh(const std::vector<float>& vertices, std::shared_ptr<Material> materialPtr);
+                ~Mesh();
+
+                void render();
+                Material* getMaterialPtr();
+
+        private:
+                std::vector<float> vertices;
+                std::shared_ptr<Material> materialPtr;
+                unsigned int VAO, VBO;
+                int vertexCount;
+
+                void setupMesh();
+};

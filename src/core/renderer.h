@@ -6,7 +6,8 @@
 #include <vector>
 #include <memory>
 #include "../graphics/shader.h"
-#include "../graphics/mesh.h"
+#include "../shapes/shape2D.h"
+
 
 class Renderer {
 public:
@@ -19,13 +20,13 @@ public:
         void swapBuffers();
         void pollEvents();
         void cleanup();
-        void addMesh(std::unique_ptr<Mesh> mesh);
+        void addShape(Shape2D* shape);
 
 private:
         GLFWwindow* window;
         Shader* shader;
         
-        std::vector<std::unique_ptr<Mesh>> meshes;
+        std::vector<std::unique_ptr<Shape2D>> shapes;
 
         glm::mat4 view;
         glm::mat4 projection;

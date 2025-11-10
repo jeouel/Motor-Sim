@@ -14,6 +14,7 @@ class Material {
                 float getShininess();
                 std::string getTextureInfo();
 
+                void applyTempColor(Shader* shader, Color newColor);
                 void applyShaders(Shader* shader);
                 Material* getPtr();
         private:

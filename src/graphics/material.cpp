@@ -21,6 +21,9 @@ float Material::getShininess() {
 std::string Material::getTextureInfo() {
         return textureInfo;
 }
+void Material::applyTempColor(Shader* shader, Color newColor) {
+        shader->setVec4("setColor", newColor.getColor());
+}
 
 void Material::applyShaders(Shader* shader) {
         shader->setVec4("setColor", color.getColor());

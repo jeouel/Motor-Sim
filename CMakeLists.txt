@@ -22,6 +22,7 @@ add_executable(engine_sim
         src/graphics/mesh.cpp
         src/graphics/material.cpp
         src/graphics/color.cpp
+        src/shapes/shape2D.cpp
 )
 
 target_link_libraries(engine_sim

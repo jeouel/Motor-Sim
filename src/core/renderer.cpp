@@ -1,6 +1,7 @@
 #include "renderer.h"
 #include <iostream>
 
+
 Renderer::Renderer() : window(nullptr), shader(nullptr) {}
 
 Renderer::~Renderer() {
@@ -50,8 +51,8 @@ bool Renderer::initialize(int width, int height) {
         return true;
 }
 
-void Renderer::addMesh(std::unique_ptr<Mesh> mesh) {
-        meshes.push_back(std::move(mesh));
+void Renderer::addShape(Shape2D* shape) {
+        shapes.push_back(std::unique_ptr<Shape2D>(shape));
 }
 
 void Renderer::render() {
@@ -62,11 +63,20 @@ void Renderer::render() {
         shader->setMat4("view", view);
         shader->setMat4("projection", projection );
 
-        for (const auto& mesh : meshes) {
-                glm::mat4 model = glm::mat4(1.0f);
-                shader->setMat4("model", model);
-                mesh->getMaterialPtr()->applyShaders(shader);
-                mesh->render();
+        for (const auto& shape : shapes) {
+                shader->setMat4("model", shape->getTransformMatrix());
+
+                glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); 
+                glLineWidth(3.0f); 
+                shape->getMesh()->getMaterialPtr()->applyTempColor(shader, Color::Black());
+                shape->getMesh()->render();
+
+                glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+                glEnable(GL_POLYGON_OFFSET_FILL);
+                glPolygonOffset(-1.0f, -1.0f); 
+
+                shape->render(shader); 
+                glDisable(GL_POLYGON_OFFSET_FILL);
         }
 }
 
@@ -83,7 +93,7 @@ void Renderer::pollEvents() {
 }
 
 void Renderer::cleanup() {
-        meshes.clear();
+        shapes.clear();
         delete shader;
     
         if (window) {

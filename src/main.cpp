@@ -1,32 +1,40 @@
-#include "color.h"
-#include "material.h"
-#include "renderer.h"
+#include "graphics/color.h"
+#include "graphics/material.h"
+#include "core/renderer.h"
+#include "shapes/shape2D.h" 
 #include <iostream>
+#include <vector>
 
 int main() {
 	Renderer renderer;
-
 	if (!renderer.initialize(800, 600)) {
 		std::cerr << "Failed to initialize renderer" << std::endl;
 		return -1;
 	}
 
-	std::vector<float> planeVertices = {
-	    -5.0f, 0.0f, -5.0f, 5.0f, 0.0f, -5.0f, 5.0f,  0.0f, 5.0f,
+	std::vector<glm::vec3> planeVertices = {
+	    glm::vec3(-5.0f, 0.0f, -5.0f), glm::vec3(5.0f, 0.0f, -5.0f), glm::vec3(5.0f,  0.0f, 5.0f),
+	    glm::vec3(-5.0f, 0.0f, -5.0f), glm::vec3(5.0f, 0.0f, 5.0f),  glm::vec3(-5.0f, 0.0f, 5.0f)
+	};
 
-	    -5.0f, 0.0f, -5.0f, 5.0f, 0.0f, 5.0f,  -5.0f, 0.0f, 5.0f};
+	std::vector<glm::vec3> triangleVertices = {
+		glm::vec3(0.0f, 2.0f, 0.0f), 
+		glm::vec3(-1.0f, 1.0f, 0.0f),
+		glm::vec3(1.0f, 1.0f, 0.0f)
+	};
 
-	std::vector<float> triangleVertices = {0.0f, 2.0f, 0.0f, -1.0f, 1.0f,
-					       0.0f, 1.0f, 1.0f, 0.0f};
+	Shape2D plane(planeVertices, "GroundPlane");
+	Shape2D triangle(triangleVertices, "PlayerTriangle");
 
-	Color blue = Color(0.0f, 0.0f, 1.0f, 1.0f);
-	Color red = Color::Red();
-	auto material1 = std::make_shared<Material>(blue, 0.0f, "materiel1");
-	auto material2 = std::make_shared<Material>(red, 0.0f, "materiel2");
-	renderer.addMesh(std::make_unique<Mesh>(planeVertices, material1));
-	renderer.addMesh(std::make_unique<Mesh>(triangleVertices, material2));
+	plane.setMaterial(std::make_shared<Material>(Color::Blue(), 0.0f, "plane_material"));
+	triangle.setMaterial(std::make_shared<Material>(Color::Red(), 0.0f, "triangle_material"));
 
-	// Main render loop
+	renderer.addShape(&plane);
+	renderer.addShape(&triangle);
+
+	triangle.translate(glm::vec3(0.0f, 1.0f, 0.0f));
+	triangle.scale(glm::vec3(1.5f)); // Uniform scale
+
 	while (!renderer.shouldClose()) {
 		renderer.pollEvents();
 		renderer.render();

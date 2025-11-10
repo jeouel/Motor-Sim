@@ -1,5 +1,4 @@
 #include "mesh.h"
-#include <iostream>
 
 Mesh::Mesh(const std::vector<float>& verts, std::shared_ptr<Material> mat) : vertices(verts), materialPtr(mat) {
         vertexCount = verts.size() / 3;
@@ -40,3 +39,9 @@ void Mesh::render() {
 Material* Mesh::getMaterialPtr() {
         return materialPtr->getPtr();
 }
+
+void Mesh::setMaterialPtr(std::shared_ptr<Material> material) {
+        materialPtr = material;
+}
+
+

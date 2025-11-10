@@ -17,11 +17,12 @@ set(CMAKE_CXX_FLAGS_RELEASE "-O3 -DNDEBUG")
 
 add_executable(engine_sim
         src/main.cpp
-        src/renderer.cpp
-        src/shader.cpp
-        src/mesh.cpp
-        src/material.cpp
-        src/color.cpp
+        src/core/renderer.cpp
+        src/graphics/shader.cpp
+        src/graphics/mesh.cpp
+        src/graphics/material.cpp
+        src/graphics/color.cpp
+        src/shapes/shape2D.cpp
 )
 
 target_link_libraries(engine_sim

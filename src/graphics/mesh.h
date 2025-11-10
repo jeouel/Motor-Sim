@@ -11,7 +11,7 @@ class Mesh {
 
                 void render();
                 Material* getMaterialPtr();
-
+                void setMaterialPtr(std::shared_ptr<Material> material);
         private:
                 std::vector<float> vertices;
                 std::shared_ptr<Material> materialPtr;

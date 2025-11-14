@@ -73,7 +73,7 @@ void Renderer::render() {
 
                 glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
                 glEnable(GL_POLYGON_OFFSET_FILL);
-                glPolygonOffset(-1.0f, -1.0f); 
+                glPolygonOffset(1.0f, 1.0f); 
 
                 shape->render(shader); 
                 glDisable(GL_POLYGON_OFFSET_FILL);

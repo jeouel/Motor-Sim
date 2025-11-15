@@ -7,6 +7,7 @@
 #include <memory>
 #include "../graphics/shader.h"
 #include "../shapes/shape2D.h"
+#include "camera.h"
 
 
 class Renderer {
@@ -19,12 +20,14 @@ public:
         bool shouldClose();
         void swapBuffers();
         void pollEvents();
+        void processInput(float deltaTime);
         void cleanup();
         void addShape(Shape2D* shape);
 
 private:
         GLFWwindow* window;
         Shader* shader;
+        Camera* camera;
         
         std::vector<std::unique_ptr<Shape2D>> shapes;
 

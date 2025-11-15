@@ -35,7 +35,16 @@ int main() {
 	triangle.translate(glm::vec3(0.0f, 1.0f, 0.0f));
 	triangle.scale(glm::vec3(1.5f)); // Uniform scale
 
+	float deltaTime = 0.0f;
+	float lastFrame = 0.0f;
+
 	while (!renderer.shouldClose()) {
+		float currentFrame = static_cast<float>(glfwGetTime());
+		deltaTime = currentFrame - lastFrame;
+		lastFrame = currentFrame;
+
+		renderer.processInput(deltaTime);
+
 		renderer.pollEvents();
 		renderer.render();
 		renderer.swapBuffers();

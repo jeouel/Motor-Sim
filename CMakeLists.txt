@@ -18,6 +18,7 @@ set(CMAKE_CXX_FLAGS_RELEASE "-O3 -DNDEBUG")
 add_executable(engine_sim
         src/main.cpp
         src/core/renderer.cpp
+        src/core/camera.cpp
         src/graphics/shader.cpp
         src/graphics/mesh.cpp
         src/graphics/material.cpp

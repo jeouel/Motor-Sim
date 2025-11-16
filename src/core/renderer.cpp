@@ -31,6 +31,11 @@ bool Renderer::initialize(int width, int height) {
     
         glfwMakeContextCurrent(window);
         glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+
+        // Set user pointer and mouse callback
+        // glfwSetWindowUserPointer(window, this);
+        // glfwSetCursorPosCallback(window, mouse_callback);
+        // glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     
         // Initialize GLEW
         if (glewInit() != GLEW_OK) {
@@ -59,7 +64,7 @@ void Renderer::render() {
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
-        glm::mat4 view = camera->GetViewMatrix();
+        glm::mat4 view = camera->getViewMatrix();
         shader->use();
         shader->setMat4("view", view);
         shader->setMat4("projection", projection );
@@ -95,21 +100,45 @@ void Renderer::pollEvents() {
 
 void Renderer::processInput(float deltaTime) {
         if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
-                camera->ProcessKeyboard(FORWARD, deltaTime);
+                camera->processKeyboard(FORWARD, deltaTime);
         }
         if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
-                camera->ProcessKeyboard(BACKWARD, deltaTime);
+                camera->processKeyboard(BACKWARD, deltaTime);
         }
         if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
-                camera->ProcessKeyboard(LEFT, deltaTime);
+                camera->processKeyboard(LEFT, deltaTime);
         }
         if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
-                camera->ProcessKeyboard(RIGHT, deltaTime);
+                camera->processKeyboard(RIGHT, deltaTime);
+        }
+        if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
+                camera->processKeyboard(UP, deltaTime);
+        }
+        if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) {
+                camera->processKeyboard(DOWN, deltaTime);
+        }
+
+        if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS) {
+                camera->processArrows(UP, deltaTime);
+        }
+        if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS) {
+                camera->processArrows(DOWN, deltaTime);
+        }
+        if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS) {
+                camera->processArrows(LEFT, deltaTime);
+        }
+        if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS) {
+                camera->processArrows(RIGHT, deltaTime);
+        }
+
+        if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
+                glfwSetWindowShouldClose(window, true  );
         }
 }
 void Renderer::cleanup() {
         shapes.clear();
         delete shader;
+
     
         if (window) {
                 glfwDestroyWindow(window);
@@ -120,3 +149,25 @@ void Renderer::cleanup() {
 void Renderer::framebuffer_size_callback(GLFWwindow* window, int width, int height) {
         glViewport(0, 0, width, height);
 }
+
+// void Renderer::mouse_callback(GLFWwindow* window, double xpos, double ypos) {
+//     Renderer* renderer = static_cast<Renderer*>(glfwGetWindowUserPointer(window));
+//     if (renderer) {
+//         renderer->handleMouse(xpos, ypos);
+//     }
+// }
+
+// void Renderer::handleMouse(double xpos, double ypos) {
+//     if (firstMouse) {
+//         lastX = xpos;
+//         lastY = ypos;
+//         firstMouse = false;
+//     }
+
+//     float xoffset = xpos - lastX;
+//     float yoffset = lastY - ypos; // Reversed since y-coordinates go from bottom to top
+//     lastX = xpos;
+//     lastY = ypos;
+
+//     camera->processMouseMovement(xoffset, yoffset);
+// }

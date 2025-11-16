@@ -38,7 +38,7 @@ private:
         float lastX = 400, lastY = 300;
 
         static void framebuffer_size_callback(GLFWwindow* window, int width, int height);
-        // static void mouse_callback(GLFWwindow* window, double xpos, double ypos);
+        static void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 
-        // void handleMouse(double xpos, double ypos);
+        void handleMouse(double xpos, double ypos);
 };

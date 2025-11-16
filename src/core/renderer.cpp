@@ -33,9 +33,9 @@ bool Renderer::initialize(int width, int height) {
         glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
         // Set user pointer and mouse callback
-        // glfwSetWindowUserPointer(window, this);
-        // glfwSetCursorPosCallback(window, mouse_callback);
-        // glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+        glfwSetWindowUserPointer(window, this);
+        glfwSetCursorPosCallback(window, mouse_callback);
+        glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     
         // Initialize GLEW
         if (glewInit() != GLEW_OK) {
@@ -150,24 +150,24 @@ void Renderer::framebuffer_size_callback(GLFWwindow* window, int width, int heig
         glViewport(0, 0, width, height);
 }
 
-// void Renderer::mouse_callback(GLFWwindow* window, double xpos, double ypos) {
-//     Renderer* renderer = static_cast<Renderer*>(glfwGetWindowUserPointer(window));
-//     if (renderer) {
-//         renderer->handleMouse(xpos, ypos);
-//     }
-// }
+void Renderer::mouse_callback(GLFWwindow* window, double xpos, double ypos) {
+    Renderer* renderer = static_cast<Renderer*>(glfwGetWindowUserPointer(window));
+    if (renderer) {
+        renderer->handleMouse(xpos, ypos);
+    }
+}
 
-// void Renderer::handleMouse(double xpos, double ypos) {
-//     if (firstMouse) {
-//         lastX = xpos;
-//         lastY = ypos;
-//         firstMouse = false;
-//     }
+void Renderer::handleMouse(double xpos, double ypos) {
+    if (firstMouse) {
+        lastX = xpos;
+        lastY = ypos;
+        firstMouse = false;
+    }
 
-//     float xoffset = xpos - lastX;
-//     float yoffset = lastY - ypos; // Reversed since y-coordinates go from bottom to top
-//     lastX = xpos;
-//     lastY = ypos;
+    float xoffset = xpos - lastX;
+    float yoffset = lastY - ypos; // Reversed since y-coordinates go from bottom to top
+    lastX = xpos;
+    lastY = ypos;
 
-//     camera->processMouseMovement(xoffset, yoffset);
-// }
+    camera->processMouseMovement(xoffset, yoffset);
+}

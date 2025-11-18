@@ -1,5 +1,4 @@
 #include "color.h"
-#include <iostream>
 
 Color::Color() {
         color = glm::vec4(0.0f, 0.0f, 0.0f, 0.0f);

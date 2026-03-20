@@ -1,17 +1,17 @@
 cmake_minimum_required(VERSION 3.16)
-project(EngineSimulation)
+project(EngineSimulation VERSION 0.4)
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED True)
 
+find_package(OpenGL REQUIRED)
 find_package(glfw3 REQUIRED)
 find_package(glm REQUIRED)
-find_package(GLEW REQUIRED)
 
 if(NOT CMAKE_BUILD_TYPE)
         set(CMAKE_BUILD_TYPE Debug)
 endif()
 
-set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_FLAGS_DEBUG "-g -O0 -DDEBUG")
 set(CMAKE_CXX_FLAGS_RELEASE "-O3 -DNDEBUG")
 
@@ -24,12 +24,16 @@ add_executable(engine_sim
         src/graphics/material.cpp
         src/graphics/color.cpp
         src/shapes/shape2D.cpp
+        # 2. Added GLAD source file
+        src/lib/glad.c
 )
+
+
+target_include_directories(engine_sim PRIVATE src/lib/include)
 
 target_link_libraries(engine_sim
         glfw
-        GLEW::GLEW
-        GL
+        OpenGL::GL
 )
 
 file(COPY ${CMAKE_SOURCE_DIR}/src/shaders

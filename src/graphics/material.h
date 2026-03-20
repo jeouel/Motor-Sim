@@ -1,5 +1,5 @@
 #pragma once
-#include <GL/glew.h>
+#include <glad/glad.h>
 #include "color.h"
 #include <string>
 #include "shader.h"

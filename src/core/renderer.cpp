@@ -36,13 +36,19 @@ bool Renderer::initialize(int width, int height) {
         glfwSetWindowUserPointer(window, this);
         glfwSetCursorPosCallback(window, mouse_callback);
         glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-    
-        // Initialize GLEW
-        if (glewInit() != GLEW_OK) {
-                std::cerr << "Failed to initialize GLEW" << std::endl;
-                return false;
-        }
-    
+   	
+	// check for window nullptr
+	if (window == nullptr){
+		std::cerr << "Window is a nullptr" << std::endl;
+		return false;
+	}
+
+	
+	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)){
+		std::cerr << "Failed to initialize GLAD" << std::endl;
+        	return false;
+	}
+
         // Enable depth testing
         glEnable(GL_DEPTH_TEST);
     

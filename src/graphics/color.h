@@ -8,7 +8,6 @@ class Color {
                 ~Color();
                 
                 glm::vec4 getColor();
-                Color* getPtr();
 
                 static Color Red();
                 static Color Green();

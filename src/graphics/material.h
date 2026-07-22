@@ -16,7 +16,6 @@ class Material {
 
                 void applyTempColor(Shader* shader, Color newColor);
                 void applyShaders(Shader* shader);
-                Material* getPtr();
         private:
                 std::shared_ptr<Material> materialPtr;
                 Color color;

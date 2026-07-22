@@ -17,24 +17,26 @@ set(CMAKE_CXX_FLAGS_RELEASE "-O3 -DNDEBUG")
 
 add_executable(engine_sim
         src/main.cpp
-        src/core/renderer.cpp
-        src/core/camera.cpp
+        src/core/controller.cpp 
+        src/graphics/renderer.cpp
+        src/graphics/camera.cpp
         src/graphics/shader.cpp
         src/graphics/mesh.cpp
         src/graphics/material.cpp
         src/graphics/color.cpp
-        src/shapes/shape2D.cpp
+        src/shapes/shape.cpp
+	src/scene/scene.cpp
         # 2. Added GLAD source file
-        src/lib/glad.c
+        external/lib/glad.c
 )
 
 
-target_include_directories(engine_sim PRIVATE src/lib/include)
+target_include_directories(engine_sim PRIVATE external/lib/include)
 
 target_link_libraries(engine_sim
         glfw
         OpenGL::GL
 )
 
-file(COPY ${CMAKE_SOURCE_DIR}/src/shaders
+file(COPY ${CMAKE_SOURCE_DIR}/shaders
         DESTINATION ${CMAKE_CURRENT_BINARY_DIR})

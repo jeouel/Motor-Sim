@@ -17,15 +17,15 @@ Shader::Shader(const char* vertexPath, const char* fragmentPath) {
         checkCompileErrors(vertex, "VERTEX");
     
         unsigned int fragment = glCreateShader(GL_FRAGMENT_SHADER);
-         glShaderSource(fragment, 1, &fShaderCode, NULL);
-         glCompileShader(fragment);
-         checkCompileErrors(fragment, "FRAGMENT");
+        glShaderSource(fragment, 1, &fShaderCode, NULL);
+        glCompileShader(fragment);
+        checkCompileErrors(fragment, "FRAGMENT");
     
-         ID = glCreateProgram();
-         glAttachShader(ID, vertex);
-         glAttachShader(ID, fragment);
-         glLinkProgram(ID);
-         checkCompileErrors(ID, "PROGRAM");
+        ID = glCreateProgram();
+        glAttachShader(ID, vertex);
+        glAttachShader(ID, fragment);
+        glLinkProgram(ID);
+        checkCompileErrors(ID, "PROGRAM");
     
         glDeleteShader(vertex);
         glDeleteShader(fragment);

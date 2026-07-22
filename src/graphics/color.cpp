@@ -15,10 +15,6 @@ glm::vec4 Color::getColor() {
         return color;
 }
 
-Color* Color::getPtr() {
-        return this;
-}
-
 Color Color::Red() { return Color(1.0f, 0.0f, 0.0f, 1.0f); }
 Color Color::Green() { return Color(0.0f, 1.0f, 0.0f, 1.0f); }
 Color Color::Blue() { return Color(0.0f, 0.0f, 1.0f, 1.0f); }

@@ -29,7 +29,4 @@ void Material::applyShaders(Shader* shader) {
         shader->setVec4("setColor", color.getColor());
 }
 
-Material* Material::getPtr() {
-        return this;
-}
 
